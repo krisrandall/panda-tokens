@@ -54,7 +54,13 @@ body {
   vertical-align:middle
 }
 
+h2 {
+  color: rgb(242, 133, 0);
+}
 
+.initial-hide {
+  display: none;
+}
 
 
 
