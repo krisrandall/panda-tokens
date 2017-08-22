@@ -1,29 +1,46 @@
-# truffle-init-webpack
-Example webpack project with Truffle. Includes contracts, migrations, tests, user interface and webpack build pipeline.
+# Panda Tokens
 
-## Usage
+A DAPP to demonstrate the simplicity of smart contracts and Metamask.   
 
-To initialize a project with this example, run `truffle init webpack` inside an empty directory.
 
-## Building and the frontend
+## Live (actually Test :) Instance
 
-1. First run `truffle compile`, then run `truffle migrate` to deploy the contracts onto your network of choice (default "development").
-1. Then run `npm run dev` to build the app and serve it on http://localhost:8080
+Once completed, a live instance will be deployed, with a link to it from here ...
 
-## Possible upgrades
 
-* Use the webpack hotloader to sense when contracts or javascript have been recompiled and rebuild the application. Contributions welcome!
 
-## Common Errors
+## Development
 
-* **Error: Can't resolve '../build/contracts/MetaCoin.json'**
+#### Doing a local dev deploy
 
-This means you haven't compiled or migrated your contracts yet. Run `truffle compile` and `truffle migrate` first.
-
-Full error:
+First start geth connected to the "Ropsten" testnet :    
 
 ```
-ERROR in ./app/main.js
-Module not found: Error: Can't resolve '../build/contracts/MetaCoin.json' in '/Users/tim/Documents/workspace/Consensys/test3/app'
- @ ./app/main.js 11:16-59
+geth --fast --cache=1048 --testnet --rpc --rpcapi "eth,net,web3" --rpccorsdomain '*' --rpcaddr localhost --rpcport 8545 --unlock 0x4Fcb8b0a22461BB32A7B95Cd7D0dB64fd2767433
 ```
+
+where the address at the end is one you have created (see 'Getting some Ropsten test ether' below)
+
+Then :    
+
+```
+$ truffle compile
+$ truffle migrate --network ropsten
+$ npm run dev
+```
+
+#### Getting some "Ropsten" test ether
+
+1. download Mist
+2. run Mist > Develop > Network > Testnet   
+ .. it takes a little while to download, ~ 1 hour
+3. create a new wallet in Mist    
+4. Develop > Start mining      
+  .. after this runs for a while (a few hours) you have some test Ether, this can then be transferred to your Metamask account from within Mist
+  
+#### Starting points for building DAAPs
+
+This project was started by doing a   
+`$ truffle init webpack`   
+and then adjusting the sample app created.
+
