@@ -65,16 +65,40 @@ window.App = {
     PandaToken.deployed().then(function(instance) {
       meta = instance;
       return meta.balance.call({from: account});
-    }).then(function(value) {
+    }).then(function(balance) {
 
-      alert('balance = '+value);
-      alert('and this is where the code flow gets to..');
+      document.querySelector('.balance').innerHTML = balance;
+      if (balance<1) { 
+        document.querySelector('.give-tokens').style.display = 'block';
+        document.querySelector('.donate-button').style.display = 'none';
+      } else {
+        document.querySelector('.donate-button').style.display = 'block';
+        document.querySelector('.give-tokens').style.display = 'none';
+      }
 
     }).catch(function(e) {
       console.log(e);
       self.setStatus("Error getting balance; see log.");
     });
   },
+
+  getFreeTokens: function(howMany) {
+    var self = this;
+
+    var meta;
+    PandaToken.deployed().then(function(instance) {
+      meta = instance;
+      return meta.tokenFaucet.call(howMany, {from: account});
+    }).then(function(balance) {
+alert(balance);
+      App.refreshBalance();
+
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error getting tokens; see log.");
+    });
+  },
+
 
   sendCoin: function() {
     var self = this;

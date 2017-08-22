@@ -38,20 +38,20 @@ body {
 
 .header h1 {
   font-family: "Segoe UI", sans-serif;
-  font-size: 46px;
+  font-size: 36px;
   font-weight: bold;
   text-align: left;
   vertical-align: middle;
   margin: 0;
-  padding-top: 24px;
+  padding-top: 20px;
   padding-left: 10px;
 }
 .header img {
-  height: 4em;
+  height: 3.2em;
   width: auto;
-  padding: 0.8em;
+  padding: 0.6em;
   font-size: 18px;
-  vertical-align:middle
+  vertical-align: middle;
 }
 
 h2 {
@@ -84,6 +84,18 @@ h2 {
   width: auto; 
   float: right;
 }
+
+.orange-button {
+  width: 100%;
+  background-color: rgb(242, 133, 0);
+  color: white;
+  border: none;
+  padding: 0.4em;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 1.4em;
+}
+
+
 
 
 @media screen and (max-width: 720px) {

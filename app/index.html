@@ -27,14 +27,21 @@
               <div class="initial-hide ready-now">
                 <h2>One-Click Transparent Donation</h2>
                 <div class="text-contents ">
-                  <span data-editableproperty="text">Donate to the Panda Appeal using Panda Tokens via your MetaMask wallet.<br><br><strong>Three reasons to use Panda Tokens</strong>
+                  <span data-editableproperty="text">Donate to the Panda Appeal using Panda Tokens via your MetaMask wallet.
+                      <small>(You have <span class="balance">?</span> Panda Tokens)</small><br><br>
+                    <strong>Three reasons to use Panda Tokens</strong>
                     <ol>
                       <li>Quick one-click donation</li>
                       <li>Lower transaction and administration fees</li>
                       <li>Transparent token distribution</li>
                     </ol>
                   </span>
+                  
                 </div>
+
+                <button class="initial-hide orange-button give-tokens" onclick="App.getFreeTokens(300)"> Get Some Tokens </button>
+                <button class="initial-hide orange-button donate-button" onclick="alert('this the next step!');"> Donate Now! </button>
+                
               </div>
               <div class="initial-hide no-metamask">
                 <h2>Install Metamask</h2>
