@@ -62,12 +62,34 @@ h2 {
   display: none;
 }
 
+.footer {
+  background-color: #ddd;
+  color: black;
+  font-family: "Segoe UI", sans-serif;
+  padding: 0.2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  box-sizing: border-box;
+}
+.footer span {
+  padding-top: 0.3em;
+  display: inline-block;
+}
+.footer img {
+  height: 1.6em;
+  width: auto; 
+  float: right;
+}
 
 
 @media screen and (max-width: 720px) {
   .article {
       width: 86vw;
-      margin: 4vw;
+      margin: 6vw;
   }
   .header img {
       font-size: 12px;
@@ -75,5 +97,8 @@ h2 {
   .header h1 {
       font-size: 25px;
       padding-top: 20px;
+  }
+  .footer {
+    position: relative;
   }
 }
