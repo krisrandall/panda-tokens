@@ -1,23 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>MetaCoin - Truffle Webpack Demo w/ Frontend</title>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  <script src="./app.js"></script>
-</head>
-<body>
-  <h1>MetaCoin</h1>
-  <h2>Example Truffle Dapp</h2>
-  <h3>You have <span class="black"><span id="balance"></span> META</span></h3>
+<!doctype html>
 
-  <br>
-  <h1>Send MetaCoin</h1>
-  <br><label for="amount">Amount:</label><input type="text" id="amount" placeholder="e.g., 95"></input>
-  <br><label for="receiver">To Address:</label><input type="text" id="receiver" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
-  <br><br><button id="send" onclick="App.sendCoin()">Send MetaCoin</button>
-  <br><br>
-  <span id="status"></span>
-  <br>
-  <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Panda Appeal Demo Site</title>
+    <meta name="description" content="Pand Appeal - Demonstrating the power and simplicity of Smartcontracts with Metamask">
+    <meta name="author" content="ConsenSys">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script src="./app.js"></script>
+    
+</head>
+
+<body>
+
+    <section class="header">
+            <img src="images/icon.png"/> 
+            <h1>Panda Appeal</h1>
+    </section>
+
+    <section class="articles">
+            <div class="article panda-img"></div>
+            <div class="article">laskdjf</div>
+            <div class="article">
+                Endangered pandas are being abused, trafficked and killed by global crime networks.<br><br>Your donation will work to strengthen anti-poaching laws – and train and equip teams to track down panda poachers and bring them before the law.<br><br>Your support will also help protect the habitats pandas need to survive, and work with communities to find peaceful ways to live side by side with them.<br><br>
+            </div>
+            <div class="article">laskdjf</div>
+    </section>
+
+
+    <div>
+      <h1>MetaCoin</h1>
+      <h2>Example Truffle Dapp</h2>
+      <h3>You have <span class="black"><span id="balance"></span> META</span></h3>
+    
+      <br>
+      <h1>Send MetaCoin</h1>
+      <br><label for="amount">Amount:</label><input type="text" id="amount" placeholder="e.g., 95"></input>
+      <br><label for="receiver">To Address:</label><input type="text" id="receiver" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+      <br><br><button id="send" onclick="App.sendCoin()">Send MetaCoin</button>
+      <br><br>
+      <span id="status"></span>
+      <br>
+      <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+    </div>
+
 </body>
 </html>
+
+
+
