@@ -23,6 +23,12 @@ body {
   margin-bottom: 0;
 }
 
+.sub-article {
+  box-sizing: border-box;
+  margin: 1%;
+  margin-bottom: 0;
+  font-size: 13px;
+}
 
 .panda-img {
   background: url('~/../images/panda.jpg') no-repeat; 
@@ -114,3 +120,4 @@ h2 {
     position: relative;
   }
 }
+

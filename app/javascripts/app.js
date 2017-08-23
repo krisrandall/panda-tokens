@@ -1,6 +1,8 @@
 // Import the page's CSS. Webpack will know what to do with it.
 import "../stylesheets/app.css";
 
+import Chartist from 'chartist';
+import config   from './config.js';
 
 
 // Import libraries we need.
@@ -50,6 +52,8 @@ window.App = {
       account = accounts[0];
 
       self.refreshBalance();
+      self.getDistribution();
+
     });
   },
 
@@ -62,7 +66,7 @@ window.App = {
     var self = this;
 
     var meta;
-    PandaToken.deployed().then(function(instance) {
+    PandaToken.at(config.contract_locations.panda_token).then(function(instance) {
       meta = instance;
       return meta.balance.call({from: account});
     }).then(function(balance) {
@@ -83,15 +87,17 @@ window.App = {
   },
 
   getFreeTokens: function(howMany) {
-    var self = this;
 
+    alert('this doesnt currenly work, sorry :(');
+
+    var self = this;
     var meta;
-    PandaToken.deployed().then(function(instance) {
+    PandaToken.at(config.contract_locations.panda_token).then(function(instance) {
       meta = instance;
       return meta.tokenFaucet.call(howMany, {from: account});
     }).then(function(balance) {
 alert(balance);
-      App.refreshBalance();
+      self.refreshBalance();
 
     }).catch(function(e) {
       console.log(e);
@@ -99,27 +105,46 @@ alert(balance);
     });
   },
 
-
-  sendCoin: function() {
+  getDistribution: function() {
     var self = this;
-
-    var amount = parseInt(document.getElementById("amount").value);
-    var receiver = document.getElementById("receiver").value;
-
-    this.setStatus("Initiating transaction... (please wait)");
-
     var meta;
-    MetaCoin.deployed().then(function(instance) {
+    PandaProject.at(config.contract_locations.panda_project).then(function(instance) {
       meta = instance;
-      return meta.sendCoin(receiver, amount, {from: account});
-    }).then(function() {
-      self.setStatus("Transaction complete!");
-      self.refreshBalance();
+      return meta.distributions.call();
+    }).then(function(dist) {
+console.log(dist);
+alert(dist);
+      self.drawChart();
+
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error sending coin; see log.");
+      self.setStatus("Error getting distributions; see log.");
     });
+  },
+
+  drawChart: function() {
+    // Drawing a donut chart
+    new Chartist.Pie('#dist-chart', {
+      series: [{
+        value: 20,
+        name: 'Series 1',
+        className: 'my-custom-class-one',
+        meta: 'Meta One'
+      }, {
+        value: 10,
+        name: 'Series 2',
+        className: 'my-custom-class-two',
+        meta: 'Meta Two'
+      }, {
+        value: 70,
+        name: 'Series 3',
+        className: 'my-custom-class-three',
+        meta: 'Meta Three'
+      }]
+    });
+  
   }
+
 };
 
 
