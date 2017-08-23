@@ -51,6 +51,7 @@ contract PandaProject {
     }
        
 
+    // This method can be used to send Ether to the contract
     function donateEther() payable returns (bool) {
         // TODO :- 
         // 1. run the donation through the standard distribution but transfer ETH, not PAN
@@ -58,7 +59,7 @@ contract PandaProject {
 
         return true;
     }
-    
+
     modifier onlyOwner() {
         if (isOwner(msg.sender)) 
             _;
@@ -101,8 +102,10 @@ contract PandaProject {
     } 
 
     
-    //Sending ether to this contract is not allowed
+    //Sending ether to this contract should run donateEther()
+    // NB: but maybe this will fail due to gas limitation on ETH transfers
     function () {
-        revert();
+        donateEther();
+        //revert();
     }
 }
