@@ -64,7 +64,6 @@ window.App = {
 
   refreshBalance: function() {
     var self = this;
-
     var meta;
     PandaToken.at(config.contract_locations.panda_token).then(function(instance) {
       meta = instance;
@@ -103,6 +102,24 @@ alert(balance);
       console.log(e);
       self.setStatus("Error getting tokens; see log.");
     });
+  },
+
+  donateTokens: function(amt) {
+    var self = this;
+    var meta;
+    PandaProject.at(config.contract_locations.panda_project).then(function(instance) {
+      meta = instance;
+      return meta.donate.call(amt, {from: account});
+    }).then(function(balance) {
+      alert('the donate has happened!!');
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error donating tokens; see log.");
+    });
+  },
+
+  donateETH: function() {
+
   },
 
   getDistribution: function() {
