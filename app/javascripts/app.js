@@ -1,11 +1,14 @@
 // Import the page's CSS. Webpack will know what to do with it.
 import "../stylesheets/app.css";
 
+
+// Import libraries we need.
 import Chartist from 'chartist';
 import config   from './config.js';
 
+import async from 'async';
 
-// Import libraries we need.
+
 import { default as Web3} from 'web3';
 import { default as contract } from 'truffle-contract'
 
@@ -113,20 +116,40 @@ window.App = {
 
   getDistribution: function() {
     var self = this;
-    PandaProject.at(config.contract_locations.panda_project).then(function(pandaProjectContract) {
-      debugger;
-      return pandaProjectContract.distributions.call(0);
-    }).then(function(dist) {
+    PandaProject.at(config.contract_locations.panda_project)
+    .then(function(pandaProjectContract) {
 
-console.log(dist);
-alert(dist);
+      var distributionList = [];
 
-      self.drawChart();
+      var distribution = [];
+      var index = 0;
+      distribution.push('initial pass');
+      async.until(  
+        function () { 
+          return distribution[0]=="0x"; 
+        },
+        function(callback) { 
+          pandaProjectContract.distributions.call(index).then( function(dist) {
+            //console.log("GOT DISTRUBUTION : ", index, dist);
+            index++;
+            distribution = dist;
 
-    }).catch(function(e) {
-      console.log(e);
-      self.setStatus("Error getting distributions; see log.");
+            if ( distribution[0]!="0x" ) {
+              distributionList.push(distribution);
+            }
+
+            callback(null);
+          } ).catch( (e)=>callback(e) ); 
+        },
+        function(e) { 
+          if (e) { console.log(e); self.setStatus("Err getting dist; see log."); } 
+          debugger;
+          console.log(distributionList);
+        }
+      )
+    
     });
+
   },
 
   drawChart: function() {
