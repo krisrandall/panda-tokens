@@ -50,6 +50,14 @@ contract PandaProject {
         pandaTokenContract.sendTokens(remainingAmount, distributions[0].recipient);
     }
        
+
+    function donateEther() payable returns (bool) {
+        // TODO :- 
+        // 1. run the donation through the standard distribution but transfer ETH, not PAN
+        // 2. allocat PAN to msg.sender 
+
+        return true;
+    }
     
     modifier onlyOwner() {
         if (isOwner(msg.sender)) 
