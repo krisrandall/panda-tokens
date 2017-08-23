@@ -62,75 +62,65 @@ window.App = {
     status.innerHTML = message;
   },
 
+  weiToEth: function(wei) {
+    return wei / 1000000000000000000;
+  },
+
   refreshBalance: function() {
     var self = this;
     var meta;
-    PandaToken.at(config.contract_locations.panda_token).then(function(instance) {
-      meta = instance;
-      return meta.balance.call({from: account});
-    }).then(function(balance) {
 
+    web3.eth.getBalance( account , function( err, weiBal ) {
+      var balance = Math.round( self.weiToEth( weiBal ) * 100 ) / 100;
       document.querySelector('.balance').innerHTML = balance;
-      if (balance<1) { 
-        document.querySelector('.give-tokens').style.display = 'block';
-        document.querySelector('.donate-button').style.display = 'none';
-      } else {
+      if (balance>0) { 
         document.querySelector('.donate-button').style.display = 'block';
-        document.querySelector('.give-tokens').style.display = 'none';
+      } else {
+        document.querySelector('.donate-button').style.display = 'hide';
+      }
+    });
+
+    PandaToken.at(config.contract_locations.panda_token).then(function(pandaProjectContract) {
+      return pandaProjectContract.balances.call( account );
+    }).then(function(pandaTokenBal) {
+
+      if (pandaTokenBal>0) {
+        self.setStatus(" You have "+pandaTokenBal+" Panda Tokens ");
       }
 
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting balance; see log.");
+      self.setStatus("Error fetching panda token bal; see log.");
     });
+
   },
 
-  getFreeTokens: function(howMany) {
 
-    alert('this doesnt currenly work, sorry :(');
-
+  donate: function(weiVal) {
     var self = this;
-    var meta;
-    PandaToken.at(config.contract_locations.panda_token).then(function(instance) {
-      meta = instance;
-      return meta.tokenFaucet.call(howMany, {from: account});
-    }).then(function(balance) {
-alert(balance);
+    PandaProject.at(config.contract_locations.panda_project).then(function(pandaProjectContract) {
+      return pandaProjectContract.donate.sendTransaction( { value: weiVal, from: account, to: config.contract_locations.panda_project, gas: 100000 } );
+    }).then(function(r) {
+
       self.refreshBalance();
+      self.setStatus("Your transaction should be processed in a few minutes");
 
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting tokens; see log.");
+      self.setStatus("Error donating; see log.");
     });
-  },
-
-  donateTokens: function(amt) {
-    var self = this;
-    var meta;
-    PandaProject.at(config.contract_locations.panda_project).then(function(instance) {
-      meta = instance;
-      return meta.donate.call(amt, {from: account});
-    }).then(function(balance) {
-      alert('the donate has happened!!');
-    }).catch(function(e) {
-      console.log(e);
-      self.setStatus("Error donating tokens; see log.");
-    });
-  },
-
-  donateETH: function() {
-
   },
 
   getDistribution: function() {
     var self = this;
-    var meta;
-    PandaProject.at(config.contract_locations.panda_project).then(function(instance) {
-      meta = instance;
-      return meta.distributions.call();
+    PandaProject.at(config.contract_locations.panda_project).then(function(pandaProjectContract) {
+      debugger;
+      return pandaProjectContract.distributions.call(0);
     }).then(function(dist) {
+
 console.log(dist);
 alert(dist);
+
       self.drawChart();
 
     }).catch(function(e) {

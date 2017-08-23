@@ -3,6 +3,8 @@
 A DAPP to demonstrate the simplicity of smart contracts and Metamask.   
 
 
+### PLEASE NOTE THIS IS JUST A PROOF OF CONCEPT AND IS NOT PRODUCTION-READY CODE
+
 ## Live (actually Test :) Instance
 
 Once completed, a live instance will be deployed, with a link to it from here ...

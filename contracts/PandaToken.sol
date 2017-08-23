@@ -8,10 +8,10 @@ contract PandaToken {
         owner = msg.sender;
     }
 
-    ///  @notice Give free tokens to the sender
-    function tokenFaucet(uint256 amount) public returns (uint256) {
-        balances[msg.sender] += amount;
-        return balances[msg.sender];
+    ///  @notice Give free tokens to a recipient
+    function tokenFaucet(address whom, uint256 amount) public returns (uint256) {
+        balances[whom] += amount;
+        return balances[whom];
     }
 
     /// @notice Send tokens from the sender address to another address

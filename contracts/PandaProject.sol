@@ -8,6 +8,11 @@ contract PandaProject {
     address[] public owners;
     PandaToken public pandaTokenContract;
 
+    string[] public debug_log;
+    uint[] public debug_log_of_numbers;
+
+    uint exchangeRate = 2;
+
     struct Distribution {
         address recipient;
         uint256 share;
@@ -18,47 +23,62 @@ contract PandaProject {
         uint256 amount;
     }
 
-    Distribution[5] public distributions;
+    Distribution[] public distributions;
 
-    function PandaProject(string projectName, address[5] recipientAddresses, uint256[5] recipientShares, address pandaTokenContractAddr) 
-    {
+
+function toString(address x) returns (string) {
+    bytes memory b = new bytes(20);
+    for (uint i = 0; i < 20; i++) {
+        b[i] = byte(uint8(uint(x) / (2**(8*(19 - i)))));
+    }
+    return string(b);
+}
+
+    function PandaProject(string projectName, address[] recipientAddresses, uint256[] recipientShares, address pandaTokenContractAddr) {
         owners.push(msg.sender);
         name = projectName;
         pandaTokenContract = PandaToken(pandaTokenContractAddr);
-        for (uint i=0; i < recipientAddresses.length; i++) {
-            distributions[i] = Distribution({
-                recipient: recipientAddresses[i],
-                share: recipientShares[i]
-            });
+
+        debug_log.push("here, about to do loop");
+        debug_log.push("here we go...");
+        debug_log_of_numbers.push(recipientAddresses.length);
+
+
+        uint j;
+        for (j=0; j<recipientAddresses.length; j++) {
+            debug_log.push(toString(recipientAddresses[j]));
+            distributions.push(Distribution({
+                recipient: recipientAddresses[j],
+                share: recipientShares[j]
+            }));
         }
+
+        debug_log.push("finished");
     }
 
     /// @notice Donate panda tokens to this project. Tokens are distributed among recipients
-    function donate(uint256 totalAmount) {
-        Distribution memory distribution;
-        uint256 remainingAmount;
-        remainingAmount = totalAmount;
+    function donate() payable returns (bool) {
 
-        for(uint i = 0; i < distributions.length; i++) {
+        Distribution memory distribution;
+        uint remainingAmount;
+        remainingAmount = msg.value;
+
+        // 1. run the donation through the standard distribution but transfer ETH
+        uint i;
+        for( i = 0; i < distributions.length; i++) {
             distribution = distributions[i];
-            uint256 distAmount = totalAmount * distribution.share / 100;
+            uint distAmount = msg.value * distribution.share / 100;
             remainingAmount -= distAmount;
-            pandaTokenContract.sendTokens(distAmount, distribution.recipient); //Send tokens from sender to recipient
+            distribution.recipient.transfer( distAmount );
         }
-        //If any remaining, give to random recipient
-        //TODO: Make random. Using first recipient as placeholder
-        pandaTokenContract.sendTokens(remainingAmount, distributions[0].recipient);
+
+        // allocate a panda token per eth allocated
+        uint pandaTokens = msg.value * exchangeRate;
+
+        // 2. allocat PAN to msg.sender 
+        pandaTokenContract.tokenFaucet( msg.sender, pandaTokens );
     }
        
-
-    // This method can be used to send Ether to the contract
-    function donateEther() payable returns (bool) {
-        // TODO :- 
-        // 1. run the donation through the standard distribution but transfer ETH, not PAN
-        // 2. allocat PAN to msg.sender 
-
-        return true;
-    }
 
     modifier onlyOwner() {
         if (isOwner(msg.sender)) 
@@ -101,11 +121,8 @@ contract PandaProject {
         }          
     } 
 
-    
-    //Sending ether to this contract should run donateEther()
-    // NB: but maybe this will fail due to gas limitation on ETH transfers
+
     function () {
-        donateEther();
-        //revert();
+        revert();
     }
 }
