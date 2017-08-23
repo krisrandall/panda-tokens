@@ -4,7 +4,7 @@ import "./PandaToken.sol";
 
 contract PandaProject {
 
-    bytes32 public name;
+    string public name;
     address[] public owners;
     PandaToken public pandaTokenContract;
 
@@ -20,7 +20,7 @@ contract PandaProject {
 
     Distribution[5] public distributions;
 
-    function PandaProject(bytes32 projectName, address[5] recipientAddresses, uint256[5] recipientShares, address pandaTokenContractAddr) 
+    function PandaProject(string projectName, address[5] recipientAddresses, uint256[5] recipientShares, address pandaTokenContractAddr) 
     {
         owners.push(msg.sender);
         name = projectName;
