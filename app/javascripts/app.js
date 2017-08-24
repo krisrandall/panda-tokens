@@ -109,8 +109,7 @@ window.App = {
       return pandaProjectContract.donate.sendTransaction( { value: weiVal, from: account, to: config.contract_locations.panda_project, gas: 100000 } );
     }).then(function(r) {
 
-      self.refreshBalance();
-      self.setStatus("Your transaction should be processed in a few minutes");
+      self.setStatus("Your transaction should be processed in a few minutes, wait a moment then refresh the page to see your Panda Token balance");
 
     }).catch(function(e) {
       console.log(e);
@@ -147,9 +146,8 @@ window.App = {
         },
         function(e) { 
           if (e) { console.log(e); self.setStatus("Err getting dist; see log."); } 
-          console.log(distributionList);
-
-          // TODO : display this on the screen
+          //console.log(distributionList);
+          self.explainDistribution(distributionList);
           
         }
       )
@@ -158,7 +156,28 @@ window.App = {
 
   },
 
+  explainDistribution: function(distributionList) {
+
+    var contractExplanation = "<strong>Donation distribution fine-print</strong>";
+    contractExplanation += "<ul>";
+    for (let d of distributionList) {
+      contractExplanation += "<li>" +
+                             d[1] + "%" + " to " +
+                             config.recepient_descriptions[d[0].toLowerCase()] + "<br>" +
+                             "<a class=\"eth_link\" href=\"https://ropsten.etherscan.io/address/"+d[0]+"#internaltx\" target=\"_blank\">"+d[0]+"</a>"+
+                             "</li>"; 
+    }
+    contractExplanation += "<ul>";
+    document.getElementById('contract-explanation').innerHTML = contractExplanation;
+
+    console.log(config.recepient_descriptions);
+    
+  },
+
   drawChart: function() {
+    
+    // NB : This bit is not done yet - below is a sample chartist chart
+
     // Drawing a donut chart
     new Chartist.Pie('#dist-chart', {
       series: [{

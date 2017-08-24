@@ -102,7 +102,19 @@ h2 {
 }
 
 
+.eth_link {
+  color:#205081;
+  text-decoration: none;
+  font-size: 12px;
+}
 
+#contract-explanation ul {
+  list-style: none;
+}
+
+.main {
+  padding-bottom: 2em;
+}
 
 @media screen and (max-width: 720px) {
   .article {
