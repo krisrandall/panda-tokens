@@ -69,6 +69,10 @@ window.App = {
     return wei / 1000000000000000000;
   },
 
+  humanReadablePandaTokenValue: function(pan) {
+    return pan / 100000000000000000;
+  },
+
   refreshBalance: function() {
     var self = this;
     var meta;
@@ -88,7 +92,7 @@ window.App = {
     }).then(function(pandaTokenBal) {
 
       if (pandaTokenBal>0) {
-        self.setStatus(" You have "+pandaTokenBal+" Panda Tokens ");
+        self.setStatus(" You have "+self.humanReadablePandaTokenValue(pandaTokenBal)+" Panda Tokens ");
       }
 
     }).catch(function(e) {
@@ -143,8 +147,10 @@ window.App = {
         },
         function(e) { 
           if (e) { console.log(e); self.setStatus("Err getting dist; see log."); } 
-          debugger;
           console.log(distributionList);
+
+          // TODO : display this on the screen
+          
         }
       )
     
