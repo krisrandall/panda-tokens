@@ -114,7 +114,12 @@ window.App = {
       return pandaProjectContract.donate.sendTransaction( { value: weiVal, from: account, to: config.contract_locations.panda_project, gas: 100000 } );
     }).then(function(r) {
 
-      self.setStatus("Your transaction should be processed in a few minutes, wait a moment then refresh the page to see your Panda Token balance");
+      //self.setStatus("Your transaction should be processed in a few minutes, wait a moment then refresh the page to see your Panda Token balance");
+      //document.querySelector('.donate-button').style.display = "none";
+      document.querySelector('.ready-now').style.display = 'none';
+      document.querySelector('.thanks').style.display = 'block';
+
+
 
     }).catch(function(e) {
       console.log(e);
@@ -178,6 +183,7 @@ window.App = {
     }
     contractExplanation += "<ul>";
     document.getElementById('contract-explanation').innerHTML = contractExplanation;
+    document.querySelector('.orange-box').style.visibility = "visible";
 
   },
 
