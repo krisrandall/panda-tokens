@@ -11,7 +11,7 @@ contract PandaToken is ERC20 {
     uint8 public constant decimals = 18;
 
     function PandaToken() {
-        owner = msg.sender;
+        contractOwner = msg.sender;
     }
 
     function isContractOwner(address _address) returns (bool) {
