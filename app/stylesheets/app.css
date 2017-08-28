@@ -33,6 +33,7 @@ body {
 .orange-box {
   border: 2px solid rgb(242, 133, 0);
   visibility: hidden;
+  justify-content: center;
 }
 
 .panda-img {
@@ -115,6 +116,7 @@ h2 {
 
 #contract-explanation ul {
   list-style: none;
+  padding-left: 0px;
 }
 
 .main {
