@@ -38,7 +38,7 @@ contract PandaToken is ERC20 {
     mapping(address => mapping (address => uint256)) allowed;
     string public constant symbol = "PAN";
     string public constant name = "Panda Token";
-    uint8 public constant decimals = 18;
+    uint8 public constant decimals = 17;
 
     function PandaToken() {
         contractOwner = msg.sender;

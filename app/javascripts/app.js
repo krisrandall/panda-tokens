@@ -87,8 +87,8 @@ window.App = {
       }
     });
 
-    PandaToken.at(config.contract_locations.panda_token).then(function(pandaProjectContract) {
-      return pandaProjectContract.balances.call( account );
+    PandaToken.at(config.contract_locations.panda_token).then(function(pandaTokenContract) {
+      return pandaTokenContract.balanceOf.call( account );
     }).then(function(pandaTokenBal) {
 
       if (pandaTokenBal>0) {

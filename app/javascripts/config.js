@@ -1,8 +1,8 @@
 
 export default {
     contract_locations : {
-        panda_token   : '0x61132549aECEa450d03FefdbE6489B2503F5b998',
-        panda_project : '0x9494BEcEd1326C0841Ed36b0C0Ca5699BaDb4420'
+        panda_token   : '0x45135b8ED5f52528175CCC6D7add2228779eDeE0',
+        panda_project : '0x94a84bc03Ac32744861f4C0CeDc5FB4d9A481EFd'
     },
 
     recepient_descriptions : {
