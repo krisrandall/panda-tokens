@@ -1,14 +1,29 @@
-# Panda Tokens
+![](images/icon.png)
+#   Panda Tokens
+*A DAPP to demonstrate the simplicity of smart contracts and Metamask.*
 
-A DAPP to demonstrate the simplicity of smart contracts and Metamask.   
-
+----
 
 ### PLEASE NOTE THIS IS JUST A PROOF OF CONCEPT AND IS NOT PRODUCTION-READY CODE
 
-## Live (actually Test :) Instance
+----
 
-Once completed, a live instance will be deployed, with a link to it from here ...
+It has the following functionality :   
 
+* detect Metamask installed, and Metamask account setup.  
+* allow donation of 0.1 ETH which results in the smart contract distributes to it's registered recipients and the donor being allocated 2 panda tokens.  
+* the % distributions are read from the contract and displayed on the webpage.  
+* the demo is on the test "Ropsten" and the addresses link to ropsten.etherscan.io so you can see that the donations are really happening. 
+
+
+## "Live" (Ropsten testnet) Instance
+
+#### Panda Token demo URL : [http://krisrandall.github.io/panda-tokens/](http://krisrandall.github.io/panda-tokens/)
+ 
+ 
+You can easily create a new account using Metamask (just remember to change to "Ropsten" first after installing it).    
+
+You will need some test Ether in order to donate, your can mine for it using Mist on testnet (see "Getting some test ether" below).
 
 
 ## Development
