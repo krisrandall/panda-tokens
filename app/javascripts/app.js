@@ -92,7 +92,8 @@ window.App = {
     }).then(function(pandaTokenBal) {
 
       if (pandaTokenBal>0) {
-        self.setStatus(" You have "+self.humanReadablePandaTokenValue(pandaTokenBal)+" Panda Tokens ");
+        //self.setStatus(" You have "+self.humanReadablePandaTokenValue(pandaTokenBal)+" Panda Tokens ");
+        console.log(" You have "+self.humanReadablePandaTokenValue(pandaTokenBal)+" Panda Tokens ");
       }
 
     }).catch(function(e) {
@@ -172,6 +173,16 @@ window.App = {
 
     console.log(config.recepient_descriptions);
     
+  },
+
+  showConditions: function() {
+
+    document.querySelectorAll('.shown-project-address').forEach( (e) => {
+      e.innerHTML = "<a class=\"eth_link\" href=\"https://ropsten.etherscan.io/address/"+config.contract_locations.panda_project+"#code\" target=\"_blank\">"+config.contract_locations.panda_project+"</a>";
+    });
+    document.querySelector('.show-t-and-c').style.display = 'none';
+    document.querySelector('.tandc').style.display = 'block';
+
   },
 
   drawChart: function() {
