@@ -1,9 +1,13 @@
+
+
 // Import the page's CSS. Webpack will know what to do with it.
-import "../stylesheets/app.css";
+import 'chartist/dist/chartist.css';
+import '../stylesheets/app.css';
 
 
 // Import libraries we need.
 import Chartist from 'chartist';
+
 import config   from './config.js';
 
 import async from 'async';
@@ -54,8 +58,8 @@ window.App = {
       accounts = accs;
       account = accounts[0];
 
-      self.refreshBalance();
-      self.getDistribution();
+      self.refreshBalance.bind(self)();
+      self.getDistribution.bind(self)();
 
     });
   },
@@ -133,7 +137,8 @@ window.App = {
           return distribution[0]=="0x"; 
         },
         function(callback) { 
-          pandaProjectContract.distributions.call(index).then( function(dist) {
+          pandaProjectContract.distributions.call(index)
+          .then( function(dist) {
             //console.log("GOT DISTRUBUTION : ", index, dist);
             index++;
             distribution = dist;
@@ -143,12 +148,13 @@ window.App = {
             }
 
             callback(null);
-          } ).catch( (e)=>callback(e) ); 
+          } ).catch( (e)=>{ throw(e); } ); 
         },
         function(e) { 
           if (e) { console.log(e); self.setStatus("Err getting dist; see log."); } 
           //console.log(distributionList);
           self.explainDistribution(distributionList);
+          self.drawChart(distributionList);
           
         }
       )
@@ -163,16 +169,16 @@ window.App = {
     contractExplanation += "<ul>";
     for (let d of distributionList) {
       contractExplanation += "<li>" +
-                             d[1] + "%" + " to " +
-                             config.recepient_descriptions[d[0].toLowerCase()] + "<br>" +
+                             "<div class=\"box\" style=\"background-color: "+config.recepient_descriptions[d[0].toLowerCase()].col+"\"></div>"+
+                              d[1] + "%" + " to " +
+                             config.recepient_descriptions[d[0].toLowerCase()].name + 
+                             "<br>" +
                              "<a class=\"eth_link\" href=\"https://ropsten.etherscan.io/address/"+d[0]+"#internaltx\" target=\"_blank\">"+d[0]+"</a>"+
                              "</li>"; 
     }
     contractExplanation += "<ul>";
     document.getElementById('contract-explanation').innerHTML = contractExplanation;
 
-    console.log(config.recepient_descriptions);
-    
   },
 
   showConditions: function() {
@@ -185,30 +191,24 @@ window.App = {
 
   },
 
-  drawChart: function() {
+  drawChart: function(distArr) {
     
     // NB : This bit is not done yet - below is a sample chartist chart
 
-    // Drawing a donut chart
-    new Chartist.Pie('#dist-chart', {
-      series: [{
-        value: 20,
-        name: 'Series 1',
-        className: 'my-custom-class-one',
-        meta: 'Meta One'
-      }, {
-        value: 10,
-        name: 'Series 2',
-        className: 'my-custom-class-two',
-        meta: 'Meta Two'
-      }, {
-        value: 70,
-        name: 'Series 3',
-        className: 'my-custom-class-three',
-        meta: 'Meta Three'
-      }]
-    });
-  
+    console.log(distArr);
+    var labels = distArr.map( (r) => r[0] );
+    var series = distArr.map( (r) => r[1] );
+
+    var chart = new Chartist.Pie("#dist-chart", {
+
+                    //labels: labels,
+                    series: series
+                }, {
+                    donut: true,
+                    showLabel: true,
+                    width: 150,
+                    height: 150
+                });
   }
 
 };

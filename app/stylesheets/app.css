@@ -30,10 +30,14 @@ body {
   font-size: 13px;
 }
 
+.orange-box {
+  border: 2px solid rgb(242, 133, 0);
+}
+
 .panda-img {
-  background: url('~/../images/panda.jpg') no-repeat; 
+  background: url('~/../images/panda.png') no-repeat; 
   background-size: cover;
-  height: 50vh;
+  height: 40vh;
   background-position: center; 
 }
 
@@ -133,3 +137,32 @@ h2 {
   }
 }
 
+/* Donut charts get built from Pie charts but with a fundamentally difference in the drawing approach. The donut is drawn using arc strokes for maximum freedom in styling */
+.ct-slice-donut {
+  /* customize stroke width of the donut slices in CSS. Note that this property is already set in JavaScript and label positioning also relies on this. In the right situation though it can be very useful to style this property. You need to use !important to override the style attribute */
+  stroke-width: 15px !important;
+}
+
+.ct-series-a .ct-slice-donut {
+  /* give the donut slice a custom colour */
+  stroke: rgb(255, 191, 0);
+}
+.ct-series-b .ct-slice-donut {
+  /* give the donut slice a custom colour */
+  stroke: silver;
+}
+.ct-series-c .ct-slice-donut {
+  /* give the donut slice a custom colour */
+  stroke: rgb(55, 113, 202);
+}
+
+
+.box {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    /* margin: 2px; */
+    margin-top: 3px;
+    margin-bottom: -3px;
+    margin-right: 5px;
+}
