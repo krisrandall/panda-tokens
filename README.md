@@ -64,7 +64,7 @@ See [these instructions for creating a local node](https://github.com/krisrandal
 Start up your node with something like :
 
 ```
-$ geth --datadir /projects/local_ethereum_blockchain/node1 --networkid 4552 console --rpc --rpcport 8545 
+$ geth --datadir /projects/local_ethereum_blockchain/node1 --networkid 61 console --rpc --rpcport 8545 
 ```
 
 **Then** : Create 3 addresses (`personal.newAccount('password')` x 3) and copy them into the recepients file (*recepient\_descriptions*) in `app/javascripts/config.js`
@@ -97,7 +97,6 @@ and change Metamask to "Localhost 8545"
 
 Note that to donate you will need some ether in your Metamask account - you can transfer to it by copying that address from Metamask and sending the ether from the `geth` terminal : `eth.sendTransaction({from: eth.accounts[0], to: "<Metamask account>", value: web3.toWei(1, "ether")})`
 
-To see your "PAN" tokens in Metamask, choose "ADD TOKEN" and paste in the address of the Panda Token contract.
 
 
 ### Trouble shooting
@@ -113,7 +112,8 @@ To see your "PAN" tokens in Metamask, choose "ADD TOKEN" and paste in the addres
   You need some more ether, allow the miner to work for a little while
  
 * Metamask Donate 0.1 ETH fails, and error says : "Error: invalid sender".      
-  [Contract built with old ethereum client](https://ethereum.stackexchange.com/a/15635/19779) - upate your local ethereum client or backdate Metamask
+  [Contract built with old ethereum client](https://ethereum.stackexchange.com/a/15635/19779) - upate your local ethereum client or backdate Metamask.   
+  **OR - ensure your network id matches the chainID in your genesis.json file**
   
 ## Starting points for building DAAPs
 
