@@ -26,7 +26,7 @@ contract PandaProject {
     Distribution[] public distributions;
 
 
-    function toString(address x) returns (string) {
+    function toString(address x) internal pure returns (string) {
         bytes memory b = new bytes(20);
         for (uint i = 0; i < 20; i++) {
             b[i] = byte(uint8(uint(x) / (2**(8*(19 - i)))));
@@ -34,7 +34,8 @@ contract PandaProject {
         return string(b);
     }
 
-    function PandaProject(string projectName, address[] recipientAddresses, uint256[] recipientShares, address pandaTokenContractAddr) {
+    function PandaProject(string projectName, address[] recipientAddresses, uint256[] recipientShares, address pandaTokenContractAddr) 
+    public {
         owners.push(msg.sender);
         name = projectName;
         pandaTokenContract = PandaToken(pandaTokenContractAddr);
@@ -57,7 +58,7 @@ contract PandaProject {
     }
 
     /// @notice Donate panda tokens to this project. Tokens are distributed among recipients
-    function donate() payable returns (bool) {
+    function donate() public payable returns (bool) {
 
         Distribution memory distribution;
         uint remainingAmount;
@@ -85,12 +86,12 @@ contract PandaProject {
             _;
     }   
 
-    function kill() onlyOwner {
-        suicide(msg.sender);
+    function kill() public onlyOwner {
+        selfdestruct(msg.sender);
     }
     
 
-    function isOwner(address owner) returns (bool) {
+    function isOwner(address owner) public view returns (bool) {
         uint i = 0;
         bool found = false;
         for (i=0; i<owners.length; i++) {
@@ -102,11 +103,11 @@ contract PandaProject {
         return found;
     }
 
-    function addOwner(address newOwner) onlyOwner {
+    function addOwner(address newOwner) public onlyOwner {
        owners.push(newOwner); 
     }
     
-    function removeOwner(address ownerToRemove) onlyOwner {
+    function removeOwner(address ownerToRemove) public onlyOwner {
         if (owners.length == 1) {
             revert(); //Can't remove all owners
         }
@@ -122,7 +123,7 @@ contract PandaProject {
     } 
 
 
-    function () {
+    function  () public {
         revert();
     }
 }
